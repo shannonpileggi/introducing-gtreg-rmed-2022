@@ -1,0 +1,109 @@
+---
+title: "Introducing {gtreg}"
+author: "Shannon Pileggi & Daniel D. Sjoberg"
+footer:  "[Introducing {gtreg}]()"
+logo: "img/gtreg-logo.png"
+editor: source
+format: 
+  revealjs: 
+    theme: slides.scss
+    transition: fade
+    slide-number: true
+    chalkboard: true
+---
+
+# Introduction
+
+## Licensing
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE, results = 'asis')
+library(gtsummary)
+library(tidyverse)
+knit_print.gtsummary <- function(x, ...) {
+  gtsummary::as_gt(x) |> gt::as_raw_html()
+}
+registerS3method("knit_print", "gtsummary", knit_print.gtsummary)
+# fill for font awesome icons
+fa_fill <- "#606060"
+```
+
+:::: {.columns .v-center-container}
+
+::: {.column width="60%"}
+<img src="img/gtreg-logo.png" alt="drawing" width="70%"/>
+:::
+
+::: {.column width="40%"}
+This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA4.0).
+:::
+
+::::
+
+
+## 
+
+:::: {.columns}
+
+
+::: {.column width="50%"}
+
+**Shannon Pileggi**
+
+![](img/Shannon_circle.png){width="57%"}
+
+`r fontawesome::fa("link", fill = fa_fill)` [pipinghotdata.com](https://www.pipinghotdata.com/)
+
+`r fontawesome::fa("twitter", fill = fa_fill)` [\@PipingHotData](https://twitter.com/PipingHotData)
+
+`r fontawesome::fa("github", fill = fa_fill)` [github.com/shannonpileggi](https://github.com/shannonpileggi/)
+
+`r fontawesome::fa("linkedin", fill = fa_fill)` [linkedin.com/in/shannon-m-pileggi/](https://www.linkedin.com/in/shannon-m-pileggi/)
+
+:::
+
+
+::: {.column width="50%"}
+
+**Daniel Sjoberg**
+
+![](img/dan-modified.png)
+
+`r fontawesome::fa("link", fill = fa_fill)` [danieldsjoberg.com](https://www.danieldsjoberg.com/)
+
+`r fontawesome::fa("twitter", fill = fa_fill)` [\@statistishdan](https://twitter.com/statistishdan)
+
+`r fontawesome::fa("github", fill = fa_fill)` [github.com/ddsjoberg](https://github.com/ddsjoberg/)
+
+`r fontawesome::fa("linkedin", fill = fa_fill)` [linkedin.com/in/ddsjoberg/](https://www.linkedin.com/in/ddsjoberg/)
+:::
+
+
+::::
+
+
+## Checklist
+
+<br>
+
+`r fontawesome::fa("check", fill = fa_fill)` R installed? Pretty recent?
+
+    I am on version `r stringr::word(R.version.string, 3, 3)`
+
+`r fontawesome::fa("check", fill = fa_fill)` RStudio installed? Pretty recent?
+
+    I am on version 2022.07.1+554 
+
+`r fontawesome::fa("check", fill = fa_fill)` Have these packages?
+
+``` r
+install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
+```
+
+## Package overview
+
+# Adverse event counting rules
+
+# Adverse event tabulation
+
+# Other convenience functions
