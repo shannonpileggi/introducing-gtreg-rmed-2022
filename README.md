@@ -1,6 +1,9 @@
 # R in Medicine, 2022
 
+
 Introducing gtreg: an R package to produce regulatory tables for clinical research
+
+Shannon Pileggi & Daniel Sjoberg
 
 Abstract: `gtreg` internally leverages `gtsummary` to streamline production for 
 regulatory tables in clinical research. There are three functions to assist with
