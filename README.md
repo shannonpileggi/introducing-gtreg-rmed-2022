@@ -10,3 +10,5 @@ count a single AE per subject by maximum grade. Furthermore, `tbl_reg_summary()`
 produces standard data summary tables often used in regulatory submissions and 
 `tbl_listing()` enables a formatted grouped printing of raw AE listings. All 
 functions are highly customizable to make your regulatory reporting a breeze!
+
+Slides: https://shannonpileggi.github.io/introducing-gtreg-rmed-2022/
