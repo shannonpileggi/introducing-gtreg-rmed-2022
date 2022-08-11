@@ -179,6 +179,8 @@ df_adverse_events |>
 
 ## Counting by maximum grade {transition="fade" visibility="uncounted"}
 
+<br>
+
 ```{r, echo=FALSE}
 df_adverse_events |> 
   select(patient_id, system_organ_class, adverse_event, grade) |> 
@@ -193,6 +195,8 @@ df_adverse_events |>
 ```
 
 ## Counting by maximum grade {transition="fade" visibility="uncounted"}
+
+<br>
 
 ```{r, echo=FALSE}
 df_adverse_events |> 
@@ -212,6 +216,11 @@ df_adverse_events |>
     locations = cells_body(rows = 3:4)
   )
 ```
+
+. . .
+
+Similar logic applies when counting by severity (e.g. mild, moderate, severe) - if stored as a factor,
+the highest factor level is retained (severe).
 
 # Adverse event tabulation
 
