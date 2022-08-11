@@ -1,7 +1,7 @@
 ---
 title: "Introducing {gtreg}"
 author: "Shannon Pileggi & Daniel D. Sjoberg"
-footer:  "[Introducing {gtreg}]()"
+footer:  "[Introducing {gtreg}](https://shannonpileggi.github.io/introducing-gtreg-rmed-2022/)"
 logo: "img/gtreg-logo.png"
 editor: source
 format: 
@@ -14,12 +14,12 @@ format:
 
 # Introduction
 
-## Licensing
-
 ```{r}
 knitr::opts_chunk$set(echo = TRUE, results = 'asis')
 library(gtsummary)
 library(tidyverse)
+library(gtreg)
+library(gt)
 knit_print.gtsummary <- function(x, ...) {
   gtsummary::as_gt(x) |> gt::as_raw_html()
 }
@@ -28,17 +28,15 @@ registerS3method("knit_print", "gtsummary", knit_print.gtsummary)
 fa_fill <- "#606060"
 ```
 
-:::: {.columns .v-center-container}
+## Licensing
 
-::: {.column width="60%"}
-<img src="img/gtreg-logo.png" alt="drawing" width="70%"/>
-:::
+<br>
 
-::: {.column width="40%"}
+<br>
+
 This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA4.0).
-:::
 
-::::
+
 
 
 ## 
@@ -100,9 +98,120 @@ This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4
 install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
 ```
 
-## Package overview
+## gtreg 
 
-# Adverse event counting rules
+:::: {.columns .v-center-container}
+
+
+::: {.column width="40%"}
+
+![](img/gtreg_hex_hires.png)
+:::
+
+
+::: {.column width="60%"}
+
+<https://shannonpileggi.github.io/gtreg/>
+
+:::
+
+::::
+
+## {gtreg} overview
+
+![](img/gtreg_overview.svg)
+
+::: notes
+image from google slides
+
+https://docs.google.com/presentation/d/1Wf8Wdc28UmtSHqwu3-pYg7ZaW52T5l_hjW0roxyMI1k/edit?usp=sharing
+:::
+
+# About adverse events
+
+## Overview
+
+```{r, echo=FALSE}
+df_adverse_events |> 
+  select(patient_id:drug_attribution) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+
+
+* An adverse event (AE) is a medical issue that occurs during the course of treatment or observation.
+
+* AEs are classified according to a [hierarchy](https://www.meddra.org/how-to-use/basics/hierarchy), and we typically report
+lower level terms within a system organ class.
+
+* AEs also record severity / grade and likelihood of attribution to treatment.
+
+## Tabulation challenges
+
+```{r, echo=FALSE}
+df_adverse_events |> 
+  select(patient_id:drug_attribution) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+
+
+* Not all enrolled subjects experience an adverse event.
+
+* Subjects experience multiple adverse events.
+
+* Adverse events are typically counted by maximum grade.
+
+* Multiple AE tables are often required (treatment emergent AEs, AEs on specific
+treatment cycles, serious AEs, etc.).
+
+
+## Counting by maximum grade
+
+<br>
+
+```{r, echo=FALSE}
+df_adverse_events |> 
+  select(patient_id, system_organ_class, adverse_event, grade) |> 
+  slice(1:5) |>
+  gt::gt() 
+```
+
+## Counting by maximum grade {transition="fade" visibility="uncounted"}
+
+```{r, echo=FALSE}
+df_adverse_events |> 
+  select(patient_id, system_organ_class, adverse_event, grade) |> 
+  mutate(ae_label = case_when(
+    adverse_event == "Anaemia" ~ "Term 1",
+    adverse_event == "Increased tendency to bruise" ~ "Term 2",
+    adverse_event == "Thrombocytopenia" ~ "Term 3"
+  )) |> 
+  slice(1:5) |>
+  group_by(ae_label) %>%
+  gt::gt() 
+```
+
+## Counting by maximum grade {transition="fade" visibility="uncounted"}
+
+```{r, echo=FALSE}
+df_adverse_events |> 
+  select(patient_id, system_organ_class, adverse_event, grade) |> 
+  mutate(ae_label = case_when(
+    adverse_event == "Anaemia" ~ "Term 1",
+    adverse_event == "Increased tendency to bruise" ~ "Term 2",
+    adverse_event == "Thrombocytopenia" ~ "Term 3"
+  )) |> 
+  slice(1:5) |>
+  group_by(ae_label) %>%
+  gt::gt() |> 
+  gt::tab_style(
+    style = list(
+      cell_fill(color = "lightgray")
+      ),
+    locations = cells_body(rows = 3:4)
+  )
+```
 
 # Adverse event tabulation
 
