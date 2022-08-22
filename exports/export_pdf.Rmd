@@ -1,0 +1,40 @@
+---
+title: "Exporting options"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(gtreg)
+```
+
+```{r}
+table1 <- df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) |> 
+  modify_header(
+    all_ae_cols() ~ "**Grade {by}**"
+    ) %>%
+  bold_labels()
+```
+
+# PDF
+
+```{r}
+table1 |> 
+  as_kable_extra(
+    booktabs = TRUE
+  ) |> 
+  kableExtra::kable_styling(
+    latex_options = "striped",
+    stripe_color = "gray!15"
+  )
+```

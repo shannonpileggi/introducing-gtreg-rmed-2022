@@ -116,3 +116,12 @@ details>summary {
   align-items: center;
   height: 90%;
 }
+
+
+.reveal .slide .vcenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%;
+  margin-top: -0.5em;
+}

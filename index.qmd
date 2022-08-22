@@ -10,11 +10,19 @@ format:
     transition: fade
     slide-number: true
     chalkboard: true
+execute:
+  echo: true
+  output: asis
+  freeze: auto
+cache: true
+filters:
+  - reveal-auto-agenda
 ---
 
 # Introduction
 
 ```{r}
+#| echo: false
 knitr::opts_chunk$set(echo = TRUE, results = 'asis')
 library(gtsummary)
 library(tidyverse)
@@ -36,16 +44,10 @@ fa_fill <- "#606060"
 
 This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA4.0).
 
-
-
-
 ## 
 
-:::: {.columns}
-
-
+::: columns
 ::: {.column width="50%"}
-
 **Shannon Pileggi**
 
 ![](img/Shannon_circle.png){width="57%"}
@@ -57,12 +59,9 @@ This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4
 `r fontawesome::fa("github", fill = fa_fill)` [github.com/shannonpileggi](https://github.com/shannonpileggi/)
 
 `r fontawesome::fa("linkedin", fill = fa_fill)` [linkedin.com/in/shannon-m-pileggi/](https://www.linkedin.com/in/shannon-m-pileggi/)
-
 :::
 
-
 ::: {.column width="50%"}
-
 **Daniel Sjoberg**
 
 ![](img/dan-modified.png)
@@ -75,20 +74,19 @@ This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4
 
 `r fontawesome::fa("linkedin", fill = fa_fill)` [linkedin.com/in/ddsjoberg/](https://www.linkedin.com/in/ddsjoberg/)
 :::
-
-
-::::
-
+:::
 
 ## Checklist
 
 <br>
 
-`r fontawesome::fa("check", fill = fa_fill)` R installed? Pretty recent?
+`r fontawesome::fa("check", fill = fa_fill)` R installed?
+Pretty recent?
 
     I am on version `r stringr::word(R.version.string, 3, 3)`
 
-`r fontawesome::fa("check", fill = fa_fill)` RStudio installed? Pretty recent?
+`r fontawesome::fa("check", fill = fa_fill)` RStudio installed?
+Pretty recent?
 
     I am on version 2022.07.1+554 
 
@@ -98,24 +96,17 @@ This presentation is licensed under a [Creative Commons Attribution-ShareAlike 4
 install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
 ```
 
-## gtreg 
+## gtreg
 
-:::: {.columns .v-center-container}
-
-
+::: {.columns .v-center-container}
 ::: {.column width="40%"}
-
 ![](img/gtreg_hex_hires.png)
 :::
 
-
 ::: {.column width="60%"}
-
 <https://shannonpileggi.github.io/gtreg/>
-
 :::
-
-::::
+:::
 
 ## {gtreg} overview
 
@@ -124,7 +115,8 @@ install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
 ::: notes
 image from google slides
 
-https://docs.google.com/presentation/d/1Wf8Wdc28UmtSHqwu3-pYg7ZaW52T5l_hjW0roxyMI1k/edit?usp=sharing
+https://docs.google.com/presentation/d/1Wf8Wdc28UmtSHqwu3-pYg7ZaW52T5l_hjW0roxyMI1k/edit?u
+sp=sharing
 :::
 
 # About adverse events
@@ -138,13 +130,11 @@ df_adverse_events |>
   gt::gt()
 ```
 
+-   An adverse event (AE) is a medical issue that occurs during the course of treatment or observation.
 
-* An adverse event (AE) is a medical issue that occurs during the course of treatment or observation.
+-   AEs are classified according to a [hierarchy](https://www.meddra.org/how-to-use/basics/hierarchy), and we typically report lower level terms within a system organ class.
 
-* AEs are classified according to a [hierarchy](https://www.meddra.org/how-to-use/basics/hierarchy), and we typically report
-lower level terms within a system organ class.
-
-* AEs also record severity / grade and likelihood of attribution to treatment.
+-   AEs also record severity / grade and likelihood of attribution to treatment.
 
 ## Summary table challenges
 
@@ -155,17 +145,13 @@ df_adverse_events |>
   gt::gt()
 ```
 
+-   Subjects experience multiple adverse events.
 
-* Subjects experience multiple adverse events.
+-   Not all enrolled subjects experience an adverse event.
 
-* Not all enrolled subjects experience an adverse event.
+-   The percent of subjects experiencing specific AEs is of interest; typically AEs are counted by maximum grade per event per subject.
 
-* The percent of subjects experiencing specific AEs is of interest; typically AEs
-are counted by maximum grade per event per subject.
-
-* Multiple AE tables are often required (treatment emergent AEs, AEs on specific
-treatment cycles, serious AEs, etc.).
-
+-   Multiple AE tables are often required (treatment emergent AEs, AEs on specific treatment cycles, serious AEs, etc.).
 
 ## Counting by maximum grade
 
@@ -177,8 +163,6 @@ df_adverse_events |>
   slice(1:5) |>
   gt::gt() 
 ```
-
-
 
 ## Counting by maximum grade {transition="fade" visibility="uncounted"}
 
@@ -221,14 +205,802 @@ df_adverse_events |>
   )
 ```
 
-
 . . .
 
 <br>
 
-Similar logic applies when counting by severity (e.g. mild, moderate, severe) - if stored as a factor,
-the highest factor level is retained (severe).
+Similar logic applies when counting by severity (e.g. mild, moderate, severe) - if stored as a factor, the highest factor level is retained (severe).
 
-# Adverse event tabulation
+# First adverse event tables
+
+## First adverse event tables
+
+![](img/gtreg_overview_first.svg)
+
+## tbl_ae_count()
+
+-   Count *all* AEs (not by maximum grade).
+
+::: panel-tabset
+### Code
+
+```{r}
+#| eval: false
+df_adverse_events |> 
+  tbl_ae_count(
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Table
+
+```{r}
+#| eval: true
+#| echo: false
+df_adverse_events |> 
+  tbl_ae_count(
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Data
+
+```{r}
+#| eval: true
+#| echo: false
+df_adverse_events |> 
+  select(adverse_event,system_organ_class, grade) |> 
+  slice(1:10) |> 
+  gt::gt()
+```
+:::
+
+## tbl_ae()
+
+-   Count AEs per subject by maximum grade.
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2,3"
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Data
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+ select(patient_id, adverse_event,system_organ_class, grade) |> 
+ slice(1:10) |> 
+ gt::gt() 
+```
+:::
+
+## tbl_ae()
+
+-   Count AEs per subject by maximum grade.
+
+-   Supply `id_df` to achieve subject denominator.
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2,4"
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Data
+
+::: columns
+::: {.column width="65%"}
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_adverse_events |> 
+  select(patient_id, adverse_event, system_organ_class, grade) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+:::
+
+::: {.column width="35%"}
+`df_patient_characteristics`
+
+```{r}
+#| echo: false
+df_patient_characteristics |> 
+  select(patient_id, trt) |> 
+  slice(1:5) |> 
+  gt::gt() 
+```
+:::
+:::
+:::
+
+## tbl_ae_focus()
+
+-   Count dichotomous AE attributes via `include`.
+
+-   Supply `id_df` to achieve subject denominator.
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2,7"
+df_adverse_events |> 
+  tbl_ae_focus(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    include = c(any_complication, grade3_complication)
+  ) 
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+  tbl_ae_focus(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    include = c(any_complication, grade3_complication)
+  ) 
+```
+
+### Data
+
+::: columns
+::: {.column width="65%"}
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_adverse_events |> 
+  select(patient_id, adverse_event, system_organ_class, any_complication, grade3_complication) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+:::
+
+::: {.column width="35%"}
+`df_patient_characteristics`
+
+```{r}
+#| echo: false
+df_patient_characteristics |> 
+  select(patient_id, trt) |> 
+  slice(1:5) |> 
+  gt::gt() 
+```
+:::
+:::
+:::
+
+# Modified adverse event tables
+
+## Modified adverse event tables
+
+![](img/gtreg_overview_modified.svg)
+
+## tbl_ae() with strata
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2,5"
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    strata = trt,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    strata = trt,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) 
+```
+
+### Data
+
+::: columns
+::: {.column width="65%"}
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_adverse_events |> 
+  select(patient_id, trt, adverse_event, system_organ_class, grade) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+:::
+
+::: {.column width="35%"}
+`df_patient_characteristics`
+
+```{r}
+#| echo: false
+df_patient_characteristics |> 
+  select(patient_id, trt) |> 
+  slice(1:5) |> 
+  gt::gt() 
+```
+:::
+:::
+:::
+
+## tbl_ae() with add_overall()
+
+See [documentation](https://shannonpileggi.github.io/gtreg/reference/add_overall_tbl_ae.html) for more `add_overall()` functionality.
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "2,10"
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    strata = trt,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) |> 
+  add_overall(across = 'by')
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+#| code-line-numbers: "2,10"
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    strata = trt,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) |> 
+  add_overall(across = 'by')
+```
+
+### Data
+
+::: columns
+::: {.column width="65%"}
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_adverse_events |> 
+  select(patient_id, trt, adverse_event, system_organ_class, grade) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+:::
+
+::: {.column width="35%"}
+`df_patient_characteristics`
+
+```{r}
+#| echo: false
+df_patient_characteristics |> 
+  select(patient_id, trt) |> 
+  slice(1:5) |> 
+  gt::gt() 
+```
+:::
+:::
+:::
+
+## tbl_ae() with other aesthetics
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "11-17"
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    strata = trt,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) |> 
+  add_overall(across = 'by') |> 
+  modify_header(
+    all_ae_cols() ~ "**Grade {by}**"
+    ) %>%
+  modify_spanning_header(
+    all_ae_cols(TRUE, TRUE) ~ "**{strata}**<br> N = {n}"
+    ) |> 
+  bold_labels()
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    strata = trt,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) |> 
+  add_overall(across = 'by') |> 
+  modify_header(
+    all_ae_cols() ~ "**Grade {by}**"
+    ) %>%
+  modify_spanning_header(
+    all_ae_cols(TRUE, TRUE) ~ "**{strata}**<br> N = {n}"
+    ) |> 
+  bold_labels()
+```
+
+### Data
+
+::: columns
+::: {.column width="65%"}
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_adverse_events |> 
+  select(patient_id, trt, adverse_event, system_organ_class, grade) |> 
+  slice(1:5) |> 
+  gt::gt()
+```
+:::
+
+::: {.column width="35%"}
+`df_patient_characteristics`
+
+```{r}
+#| echo: false
+df_patient_characteristics |> 
+  select(patient_id, trt) |> 
+  slice(1:5) |> 
+  gt::gt() 
+```
+:::
+:::
+:::
 
 # Other convenience functions
+
+## Other convenience functions
+
+![](img/gtreg_overview_other.svg)
+
+## tbl_reg_summary()
+
+Create summary tables with standard regulatory formatting.
+
+::: panel-tabset
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+ df_patient_characteristics |> 
+  tbl_reg_summary(
+    by = trt, 
+    include = c(marker, status)
+    ) |> 
+  bold_labels()
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+ df_patient_characteristics |> 
+  tbl_reg_summary(
+    by = trt, 
+    include = c(marker, status)
+    )|> 
+  bold_labels()
+```
+
+### Data
+
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_patient_characteristics |> 
+  select(patient_id, trt, marker, status) |> 
+  slice(1:5) |> 
+  gt::gt() 
+```
+:::
+
+## tbl_listing()
+
+A fancy 💅 way to print grouped data.
+
+::: panel-tabset
+
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "5-7"
+df_adverse_events |> 
+  head(n = 10) |> 
+  select(system_organ_class, adverse_event, grade, drug_attribution, patient_id) |> 
+  arrange(adverse_event, desc(grade)) |> 
+  tbl_listing(
+    group_by = system_organ_class
+    ) |> 
+  bold_labels()
+```
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+df_adverse_events |> 
+  head(n = 10) |> 
+  select(system_organ_class, adverse_event, grade, drug_attribution, patient_id) |> 
+  arrange(adverse_event, desc(grade)) |> 
+  tbl_listing(
+    group_by = system_organ_class
+    ) |> 
+  bold_labels()
+```
+
+### Data
+
+`df_adverse_events`
+
+```{r}
+#| echo: false
+df_adverse_events |> 
+  head(n = 10) |> 
+  select(system_organ_class, adverse_event, grade, drug_attribution, patient_id) |> 
+  arrange(adverse_event, desc(grade)) |> 
+  gt::gt()
+```
+
+:::
+
+## tbl_listing() extensions
+
+Remember this table?
+
+```{r}
+#| echo: false
+#| eval: true
+dat <- df_adverse_events |> 
+  select(patient_id, system_organ_class, adverse_event, grade) |> 
+  mutate(ae_label = case_when(
+    adverse_event == "Anaemia" ~ "Term 1",
+    adverse_event == "Increased tendency to bruise" ~ "Term 2",
+    adverse_event == "Thrombocytopenia" ~ "Term 3"
+  )) |> 
+  slice(1:5)
+```
+
+
+::: panel-tabset
+
+### Table
+
+```{r}
+#| echo: false
+#| eval: true
+dat |>
+  tbl_listing(
+    group_by = ae_label
+  ) |> 
+  bold_labels() |> 
+  as_gt() |> 
+  gt::tab_style(
+    style = list(
+      cell_fill(color = "#FFFBC8")
+      ),
+    locations = cells_body(rows = c(2, 4, 8))
+  )
+```
+
+### Code
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: "6-7"
+dat |>
+  tbl_listing(
+    group_by = ae_label
+  ) |> 
+  bold_labels() |> 
+  as_gt() |> 
+  gt::tab_style(
+    style = list(
+      cell_fill(color = "#FFFBC8")
+      ),
+    locations = cells_body(rows = c(2, 4, 8))
+  )
+```
+
+### Data
+
+```{r}
+#| echo: false
+#| eval: true
+dat |>
+  gt::gt() 
+```
+
+
+:::
+
+# Exporting options
+
+## Exporting options
+
+![](img/gtreg_overview_export.svg)
+
+## Exporting options
+
+::: panel-tabset
+
+### html
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: true
+table1 <- df_adverse_events |> 
+  tbl_ae(
+    id = patient_id,
+    id_df = df_patient_characteristics,
+    ae = adverse_event,
+    soc = system_organ_class, 
+    by = grade
+  ) |> 
+  modify_header(
+    all_ae_cols() ~ "**Grade {by}**"
+    ) %>%
+  bold_labels()
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: true
+table1
+```
+
+:::
+
+:::
+
+
+
+### word
+
+::: columns
+
+::: {.column width="50%"}
+
+
+```{r}
+#| echo: true
+#| eval: false
+table1 |>  
+  gtsummary::as_flex_table() |> 
+  flextable::save_as_docx(
+    path = here::here("ae_table.docx")
+    )
+```
+
+
+:::
+
+::: {.column width="50%"}
+
+![](img/out_word.PNG)
+
+:::
+
+:::
+
+
+### excel
+
+::: columns
+
+::: {.column width="50%"}
+
+
+```{r}
+#| echo: true
+#| eval: false
+table1 |>  
+ gtsummary::as_hux_xlsx(
+   file = here::here("ae_table.xlsx")
+   )
+```
+
+:::
+
+::: {.column width="50%"}
+
+![](img/out_excel.PNG)
+
+:::
+
+:::
+
+### pdf
+
+::: columns
+
+::: {.column width="50%"}
+
+
+````{verbatim}
+---
+output: pdf_document
+---
+
+<stuff>  
+  
+```{r}
+table1 |> 
+  as_kable_extra(
+    booktabs = TRUE
+  ) |> 
+  kableExtra::kable_styling(
+    latex_options = "striped",
+    stripe_color = "gray!15"
+  )
+```  
+  
+````
+
+:::
+
+::: {.column width="50%"}
+
+![](img/out_pdf.PNG)
+
+:::
+
+:::
+
+
+:::
+
+## Thank you!
+
+
+`r fontawesome::fa("file-lines", fill = fa_fill)` {gtreg} website
+
+&nbsp; &nbsp; <https://shannonpileggi.github.io/gtreg/>
+
+
+`r fontawesome::fa("screwdriver-wrench", fill = fa_fill)` {gtreg} installation
+
+```{r}
+#| eval: false
+#| echo: true
+# install from CRAN
+install.packages("gtreg") 
+# or install development version from github
+devtools::install_github("shannonpileggi/gtreg") 
+```
+
+
+`r fontawesome::fa("lightbulb", fill = fa_fill)` {gtreg} issues or feature requests
+
+&nbsp; &nbsp; <https://github.com/shannonpileggi/gtreg/issues>
+
+
+`r fontawesome::fa("stack-overflow", fill = fa_fill)` {gtreg} questions: ask on [stackoverflow.com](stackoverflow.com) (*use tag gtreg*)
