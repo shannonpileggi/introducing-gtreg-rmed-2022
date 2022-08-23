@@ -93,7 +93,7 @@ Pretty recent?
 `r fontawesome::fa("check", fill = fa_fill)` Have these packages?
 
 ``` r
-install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
+install.packages(c("gtreg", "tidyverse", "labelled"))
 ```
 
 ## gtreg
@@ -212,6 +212,83 @@ df_adverse_events |>
 Similar logic applies when counting by severity (e.g. mild, moderate, severe) - if stored as a factor, the highest factor level is retained (severe).
 
 # First adverse event tables
+
+## Data
+
+
+
+::: columns
+
+::: {.column width="50%"}
+
+`df_patient_characteristics`
+
+* 100 unique subjects
+
+* 1 row per subject
+
+```{r}
+#| echo: false
+#| eval: true
+head(df_adverse_events) |> gt::gt()
+```
+
+
+:::
+
+
+::: {.column width="50%"}
+
+`df_adverse_events`
+
+* 10 unique subjects
+
+* multiple rows per subject
+
+```{r}
+#| echo: false
+#| eval: true
+head(df_patient_characteristics) |> gt::gt()
+```
+
+
+:::
+
+:::
+
+## Data labels are printed in {gtsummary} and {gtreg} tables
+
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: true
+str(df_patient_characteristics)
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+
+```{r}
+#| echo: true
+#| eval: false
+view(df_patient_characteristics)
+```
+
+![](img/df_patient_characterstics.PNG)
+
+
+:::
+
+:::
+
+
 
 ## First adverse event tables
 
@@ -603,7 +680,7 @@ df_adverse_events |>
     all_ae_cols() ~ "**Grade {by}**"
     ) %>%
   modify_spanning_header(
-    all_ae_cols(TRUE, TRUE) ~ "**{strata}**<br> N = {n}"
+     all_ae_cols(TRUE, TRUE) ~ "**{strata}**  \nN = {n}"
     ) |> 
   bold_labels()
 ```
@@ -627,7 +704,7 @@ df_adverse_events |>
     all_ae_cols() ~ "**Grade {by}**"
     ) %>%
   modify_spanning_header(
-    all_ae_cols(TRUE, TRUE) ~ "**{strata}**<br> N = {n}"
+    all_ae_cols(TRUE, TRUE) ~ "**{strata}**  \nN = {n}"
     ) |> 
   bold_labels()
 ```
