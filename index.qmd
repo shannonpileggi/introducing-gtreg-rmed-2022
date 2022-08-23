@@ -213,6 +213,83 @@ Similar logic applies when counting by severity (e.g. mild, moderate, severe) - 
 
 # First adverse event tables
 
+## Data
+
+
+
+::: columns
+
+::: {.column width="50%"}
+
+`df_patient_characteristics`
+
+* 100 unique subjects
+
+* 1 row per subject
+
+```{r}
+#| echo: false
+#| eval: true
+head(df_adverse_events) |> gt::gt()
+```
+
+
+:::
+
+
+::: {.column width="50%"}
+
+`df_adverse_events`
+
+* 10 unique subjects
+
+* multiple rows per subject
+
+```{r}
+#| echo: false
+#| eval: true
+head(df_patient_characteristics) |> gt::gt()
+```
+
+
+:::
+
+:::
+
+## Data labels are printed in {gtsummary} and {gtreg} tables
+
+
+::: columns
+
+::: {.column width="50%"}
+
+```{r}
+#| echo: true
+#| eval: true
+str(df_patient_characteristics)
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+
+```{r}
+#| echo: true
+#| eval: false
+view(df_patient_characteristics)
+```
+
+![](img/df_patient_characterstics.PNG)
+
+
+:::
+
+:::
+
+
+
 ## First adverse event tables
 
 ![](img/gtreg_overview_first.svg)
@@ -603,11 +680,7 @@ df_adverse_events |>
     all_ae_cols() ~ "**Grade {by}**"
     ) %>%
   modify_spanning_header(
-    # I _just_ learned this, but you can use '  \n' as a linebreaker that is 
-    # recognized by HTML output in gt (need to test the other output formats),
-    # but this would also work with flextable and kableExtra.
-    # not 100% sure how the two spaces in front of  \n will render in the other formats?
-    all_ae_cols(TRUE, TRUE) ~ "**{strata}**  \nN = {n}"
+     all_ae_cols(TRUE, TRUE) ~ "**{strata}**  \nN = {n}"
     ) |> 
   bold_labels()
 ```
@@ -631,7 +704,7 @@ df_adverse_events |>
     all_ae_cols() ~ "**Grade {by}**"
     ) %>%
   modify_spanning_header(
-    all_ae_cols(TRUE, TRUE) ~ "**{strata}**<br> N = {n}"
+    all_ae_cols(TRUE, TRUE) ~ "**{strata}**  \nN = {n}"
     ) |> 
   bold_labels()
 ```
@@ -948,7 +1021,7 @@ table1 |>
 
 ::: {.column width="50%"}
 
-<!-- the screenshot of the PDF output was blurry for me -->
+
 ````{verbatim}
 ---
 output: pdf_document
