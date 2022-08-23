@@ -93,7 +93,7 @@ Pretty recent?
 `r fontawesome::fa("check", fill = fa_fill)` Have these packages?
 
 ``` r
-install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
+install.packages(c("gtreg", "tidyverse", "labelled"))
 ```
 
 ## gtreg
@@ -603,7 +603,11 @@ df_adverse_events |>
     all_ae_cols() ~ "**Grade {by}**"
     ) %>%
   modify_spanning_header(
-    all_ae_cols(TRUE, TRUE) ~ "**{strata}**<br> N = {n}"
+    # I _just_ learned this, but you can use '  \n' as a linebreaker that is 
+    # recognized by HTML output in gt (need to test the other output formats),
+    # but this would also work with flextable and kableExtra.
+    # not 100% sure how the two spaces in front of  \n will render in the other formats?
+    all_ae_cols(TRUE, TRUE) ~ "**{strata}**  \nN = {n}"
     ) |> 
   bold_labels()
 ```
@@ -944,7 +948,7 @@ table1 |>
 
 ::: {.column width="50%"}
 
-
+<!-- the screenshot of the PDF output was blurry for me -->
 ````{verbatim}
 ---
 output: pdf_document
