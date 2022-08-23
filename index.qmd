@@ -23,6 +23,26 @@ filters:
 
 ```{r}
 #| echo: false
+#| eval: false
+library(metathis)
+meta() %>%
+  meta_name("github-repo" = "https://github.com/shannonpileggi/introducing-gtreg-rmed-2022") %>% 
+  meta_social(
+    title = "Introducing gtreg: an R package to produce regulatory tables for clinical research",
+    url = "https://shannonpileggi.github.io/introducing-gtreg-rmed-2022/#/title-slide",
+    image = "https://github.com/shannonpileggi/introducing-gtreg-rmed-2022/blob/main/img/gtreg_overview_preview.PNG?raw=true",
+    image_alt = "Flow chart overview of {gtreg} usage and functions.",
+    og_type = "slides",
+    og_author = "Shannon Pileggi",
+    twitter_card_type = "summary_large_image",
+    twitter_creator = "@PipingHotdata",
+    twitter_site = "@PipingHotdata"
+  )
+```
+
+
+```{r}
+#| echo: false
 knitr::opts_chunk$set(echo = TRUE, results = 'asis')
 library(gtsummary)
 library(tidyverse)
@@ -93,7 +113,7 @@ Pretty recent?
 `r fontawesome::fa("check", fill = fa_fill)` Have these packages?
 
 ``` r
-install.packages(c("gtreg", "tidyverse", "labelled"))
+install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
 ```
 
 ## gtreg
@@ -982,7 +1002,7 @@ table1
 #| echo: true
 #| eval: false
 table1 |>  
-  gtsummary::as_flex_table() |> 
+  as_flex_table() |> 
   flextable::save_as_docx(
     path = here::here("ae_table.docx")
     )
@@ -1011,7 +1031,7 @@ table1 |>
 #| echo: true
 #| eval: false
 table1 |>  
- gtsummary::as_hux_xlsx(
+ as_hux_xlsx(
    file = here::here("ae_table.xlsx")
    )
 ```
@@ -1091,4 +1111,7 @@ devtools::install_github("shannonpileggi/gtreg")
 &nbsp; &nbsp; <https://github.com/shannonpileggi/gtreg/issues>
 
 
-`r fontawesome::fa("stack-overflow", fill = fa_fill)` {gtreg} questions: ask on [stackoverflow.com](stackoverflow.com) (*use tag gtreg*)
+`r fontawesome::fa("github", fill = fa_fill)` {gtreg} questions: ask on <https://github.com/shannonpileggi/gtreg/discussions>
+
+
+
