@@ -3524,17 +3524,22 @@ Thrombocytopenia
 </div>
 </div>
 </section>
-<section id="data-labels-are-printed-in-gtsummary-and-gtreg-tables" class="slide level2">
-<h2>Data labels are printed in {gtsummary} and {gtreg} tables</h2>
+<section id="variable-labels" class="slide level2">
+<h2>Variable labels</h2>
+<ul>
+<li><p>A variable label is an attribute of a variable in a data frame.</p></li>
+<li><p>Where applicable, <em>variable labels</em> (not <em>variable names</em>) are printed in {gtsummary} and {gtreg} tables.</p></li>
+<li><p>The example data in {gtreg} comes with variable labels; you can also create your own via <a href="https://larmarange.github.io/labelled/reference/var_label.html"><code>labelled::set_variable_labels()</code></a>.</p></li>
+</ul>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell" data-hash="index_cache/revealjs/raw-model-summary_81444c52d5b784106c4d48831100bb82">
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-9_48ee504502c67a0a06adbf0527063b99">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">str</span>(df_patient_characteristics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>tibble [100 × 7] (S3: tbl_df/tbl/data.frame) $ patient_id : chr [1:100] “ID 1” “ID 2” “ID 3” “ID 4” … ..- attr(<em>, “label”)= chr “Patient ID” $ trt : chr [1:100] “Drug B” “Drug B” “Drug B” “Drug B” … ..- attr(</em>, “label”)= chr “Treatment Group” $ age : num [1:100] 28 47 39 45 58 42 57 23 41 49 … ..- attr(<em>, “label”)= chr “Patient Age” $ marker : num [1:100] 4.81 7.71 6.45 6.32 5.79 … ..- attr(</em>, “label”)= chr “Biological Marker” $ status : Factor w/ 6 levels “Completed Study”,..: 2 1 1 5 4 1 4 2 6 2 … ..- attr(<em>, “label”)= chr “Study Status” $ discontinued: chr [1:100] “Yes” “No” “No” “Yes” … ..- attr(</em>, “label”)= chr “Discontinued from Study” $ off_trt_ae : chr [1:100] “Intestinal dilatation” NA NA NA … ..- attr(*, “label”)= chr “Off Treatment Adverse Event”</p>
 </div>
+<p><img data-src="img/df_patient_characteristics_str_hl.PNG"></p>
 </div><div class="column" style="width:50%;">
-<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_92c04e4af5cd62100b924641cd3b86ae">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">view</span>(df_patient_characteristics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="index_cache/revealjs/unnamed-chunk-10_0b00a56fab0b46a82578346cb827d96a">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">View</span>(df_patient_characteristics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img data-src="img/df_patient_characterstics.PNG"></p>
 </div>

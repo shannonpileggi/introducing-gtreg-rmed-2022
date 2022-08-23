@@ -256,7 +256,15 @@ head(df_patient_characteristics) |> gt::gt()
 
 :::
 
-## Data labels are printed in {gtsummary} and {gtreg} tables
+## Variable labels 
+
+* A variable label is an attribute of a variable in a data frame.
+
+* Where applicable, _variable labels_ (not _variable names_) are printed 
+in {gtsummary} and {gtreg} tables.
+
+* The example data in {gtreg} comes with variable labels; you can
+also create your own via [`labelled::set_variable_labels()`](https://larmarange.github.io/labelled/reference/var_label.html).
 
 
 ::: columns
@@ -265,9 +273,12 @@ head(df_patient_characteristics) |> gt::gt()
 
 ```{r}
 #| echo: true
-#| eval: true
+#| eval: false
 str(df_patient_characteristics)
 ```
+
+![](img/df_patient_characteristics_str_hl.PNG)
+
 
 :::
 
@@ -278,7 +289,7 @@ str(df_patient_characteristics)
 ```{r}
 #| echo: true
 #| eval: false
-view(df_patient_characteristics)
+View(df_patient_characteristics)
 ```
 
 ![](img/df_patient_characterstics.PNG)
