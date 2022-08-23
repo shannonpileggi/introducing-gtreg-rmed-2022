@@ -10,6 +10,9 @@ format:
     transition: fade
     slide-number: true
     chalkboard: true
+  html:
+    include-in-header:
+      meta.html
 execute:
   echo: true
   output: asis
@@ -21,9 +24,8 @@ filters:
 
 # Introduction
 
-```{r}
-#| echo: false
-#| eval: false
+```{r meta}
+#| include: false
 library(metathis)
 meta() %>%
   meta_name("github-repo" = "https://github.com/shannonpileggi/introducing-gtreg-rmed-2022") %>% 
@@ -37,7 +39,9 @@ meta() %>%
     twitter_card_type = "summary_large_image",
     twitter_creator = "@PipingHotdata",
     twitter_site = "@PipingHotdata"
-  )
+  ) %>% 
+  format() %>% 
+  writeLines("meta.html")
 ```
 
 
