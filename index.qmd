@@ -10,7 +10,6 @@ format:
     transition: fade
     slide-number: true
     chalkboard: true
-  html:
     include-in-header:
       meta.html
 execute:
