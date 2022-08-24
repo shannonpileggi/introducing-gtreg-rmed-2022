@@ -128,6 +128,13 @@ install.packages(c("tidyverse", "labelled", "gtsummary", "gtreg"))
 
 ::: {.column width="60%"}
 <https://shannonpileggi.github.io/gtreg/>
+<br>
+
+&nbsp;&nbsp;[{gtreg}](https://shannonpileggi.github.io/gtreg/) is built on
+
+&nbsp;&nbsp;&nbsp;&nbsp; [{gtsummary}](https://www.danieldsjoberg.com/gtsummary/) is built on
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [{gt}](https://gt.rstudio.com/)
 :::
 :::
 
