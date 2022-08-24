@@ -1109,12 +1109,12 @@ devtools::install_github("shannonpileggi/gtreg")
 ```
 
 
-`r fontawesome::fa("lightbulb", fill = fa_fill)` {gtreg} issues or feature requests
+`r fontawesome::fa("github", fill = fa_fill)` {gtreg} issues 
 
 &nbsp; &nbsp; <https://github.com/shannonpileggi/gtreg/issues>
 
 
-`r fontawesome::fa("github", fill = fa_fill)` {gtreg} questions: ask on <https://github.com/shannonpileggi/gtreg/discussions>
+`r fontawesome::fa("lightbulb", fill = fa_fill)` {gtreg} feature requests or questions: ask on <https://github.com/shannonpileggi/gtreg/discussions>
 
 
 
