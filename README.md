@@ -16,4 +16,4 @@ functions are highly customizable to make your regulatory reporting a breeze!
 
 Slides: https://shannonpileggi.github.io/introducing-gtreg-rmed-2022/
 
-Recording: https://www.youtube.com/watch?v=DmslEfczYqM&list=PL4IzsxWztPdmSeucR67EH_8_hzldqYZX4&index=17
+Recording: https://youtu.be/DmslEfczYqM
