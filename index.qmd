@@ -818,7 +818,7 @@ Create summary tables with standard regulatory formatting.
 
 ### Data
 
-`df_adverse_events`
+` df_patient_characteristics`
 
 ```{r}
 #| echo: false
