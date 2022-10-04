@@ -251,7 +251,7 @@ Similar logic applies when counting by severity (e.g. mild, moderate, severe) - 
 
 ::: {.column width="50%"}
 
-`df_patient_characteristics`
+`df_adverse_events`
 
 * 100 unique subjects
 
@@ -269,7 +269,7 @@ head(df_adverse_events) |> gt::gt()
 
 ::: {.column width="50%"}
 
-`df_adverse_events`
+`df_patient_characteristics`
 
 * 10 unique subjects
 
